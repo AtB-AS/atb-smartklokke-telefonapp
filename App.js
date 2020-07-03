@@ -3,8 +3,8 @@ import { SafeAreaView, StyleSheet, TextInput, Button, Text, View } from 'react-n
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator, DefaultTheme } from '@react-navigation/bottom-tabs';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import NewJourney from '../screens/NewJourney.js';
-import MyJourneys from '../screens/MyJourneys.js';
+import NewJourney from './screens/NewJourney.js';
+import MyJourneys from './screens/MyJourneys.js';
 
 const App = () => {
 

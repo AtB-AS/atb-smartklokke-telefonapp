@@ -1,23 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Text, SafeAreaView, StyleSheet, TextInput, Button, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Text, SafeAreaView, StyleSheet, TextInput, ScrollView, TouchableOpacity, View } from 'react-native';
 import createEnturService from '@entur/sdk';
 import BackgroundGeolocation from '@mauron85/react-native-background-geolocation';
-import Journey from '../components/Journey.js';
 import StopPlace from '../components/StopPlace.js';
-import EnabledDeparture from '../components/EnabledDeparture.js';
 import AsyncStorage from '@react-native-community/async-storage';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import EnabledStopPlace from '../components/EnabledStopPlace.js';
 
 const NewJourney = () => {
 
     const [userInput, setUserInput] = useState('');
-    const [busListName, setBusListName] = useState('');
+    //const [busListName, setBusListName] = useState('');
     const [stopPlaces, setStopPlaces] = useState([]);
-    const [enabledDepartures, setEnabledDepartures] = useState([]);
+    const [enabledStopPlaces, setEnabledStopPlaces] = useState([]);
     const [currentLocation, setCurrentLocation] = useState({ latitude: 0, longitude: 0 });
     const service = createEnturService({ clientName: 'AtB-smartklokke' });
-
-
 
 
     useEffect(() => {
@@ -41,7 +38,6 @@ const NewJourney = () => {
                     });
                     setStopPlaces(stops);
                 }
-
             } catch (error) {
                 if (mounted) {
                     console.log(error);
@@ -53,56 +49,68 @@ const NewJourney = () => {
     }, [userInput])
 
     function handleToggleDeparture(publicCode, frontText, stopPlace, stopPlaceId, isEnabled) {
-        var newArray = [...enabledDepartures];
+        var newEnabledStopPlaces = [...enabledStopPlaces];
         if (isEnabled) {
-            newArray.push({
-                publicCode: publicCode,
-                frontText: frontText,
-                stopPlaceId: stopPlaceId,
-                id: publicCode + '#' + frontText + '#' + stopPlace,
-            });
+            if (!newEnabledStopPlaces.some(stop => { return stop.id === stopPlaceId })) {
+                newEnabledStopPlaces.push({
+                    name: stopPlace,
+                    id: stopPlaceId,
+                    departures: [publicCode + '#' + frontText],
+                });
+            }
+            else {
+
+                newEnabledStopPlaces.forEach(stop => {
+                    if (stop.id === stopPlaceId) {
+                        stop.departures.push(publicCode + '#' + frontText);
+                    }
+                });
+            }
         }
         else {
-            newArray = newArray.filter(enabledDep => {
-                return enabledDep.id !== publicCode + '#' + frontText + '#' + stopPlace;
+            newEnabledStopPlaces.forEach(stop => {
+                if (stop.id === stopPlaceId) {
+                    stop.departures = stop.departures.filter(dep => { return dep !== publicCode + '#' + frontText });
+                }
             });
+            newEnabledStopPlaces = newEnabledStopPlaces.filter(stop => { return stop.departures.length > 0 });
         }
-        setEnabledDepartures(newArray);
+        setEnabledStopPlaces(newEnabledStopPlaces);
     }
 
 
     async function handleSaveDeparturesPress() {
+        if (enabledStopPlaces.length === 0) {
+            return;
+        }
         try {
             await AsyncStorage.getItem('journeyList').then(data => {
+                console.log('data:', data);
                 if (data) {
+
                     var journeyList = JSON.parse(data);
                     const journey = {
-                        name: busListName,
-                        departures: enabledDepartures,
+                        //name: busListName,
+                        stopList: enabledStopPlaces,
                     }
                     journeyList.push(journey);
-                    console.log(journeyList);
+                    console.log('journeyList', journeyList);
                     storeData('journeyList', journeyList);
                 }
             });
         } catch (e) {
             console.log(e);
         }
+        setUserInput('');
+        setStopPlaces([]);
+        setEnabledStopPlaces([]);
+
     }
 
     const storeData = async (key, value) => {
         try {
             const jsonValue = JSON.stringify(value);
             await AsyncStorage.setItem(key, jsonValue);
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
-    getData = async (key) => {
-        try {
-            const jsonValue = await AsyncStorage.getItem(key);
-            return jsonValue != null ? JSON.parse(jsonValue) : null;
         } catch (e) {
             console.log(e);
         }
@@ -128,21 +136,12 @@ const NewJourney = () => {
                         placeholder='Finn Busstopp'
                     />
                 </View>
-
-
-                <TextInput
-                    style={styles.listNameInput}
-                    onChangeText={setBusListName}
-                    placeholder='Min bussliste'
-                />
-                <ScrollView horizontal={true} style={styles.enabledDepartureList}>
-                    {enabledDepartures.map(departure =>
-                        <EnabledDeparture key={departure.id} publicCode={departure.publicCode} frontText={departure.frontText} />
+                <ScrollView horizontal={true} style={styles.enabledStopPlaces}>
+                    {enabledStopPlaces.map(stop =>
+                        <EnabledStopPlace key={stop.id} id={stop.id} name={stop.name} departures={stop.departures} handleToggle={handleToggleDeparture} />
                     )}
                 </ScrollView>
             </View>
-
-
             <ScrollView>
                 {stopPlaces.map(stop =>
                     <StopPlace key={stop.properties.id} name={stop.properties.label} nsrId={stop.properties.id} toggleDeparture={handleToggleDeparture} />
@@ -159,7 +158,6 @@ const styles = StyleSheet.create({
     container: {
         paddingTop: 20,
         flex: 1,
-        //backgroundColor: '#E3E6B3',
     },
     stopInput: {
         marginLeft: 5,
@@ -177,16 +175,14 @@ const styles = StyleSheet.create({
         backgroundColor: 'whitesmoke'
     },
     listNameInput: {
-        //borderWidth: 1,
         borderRadius: 5,
         borderColor: 'grey',
         height: 40,
         paddingLeft: 10,
     },
-    enabledDepartureList: {
+    enabledStopPlaces: {
         flexDirection: 'row',
         height: 70,
-        marginBottom: 10,
     },
     button: {
         borderRadius: 1,
@@ -205,7 +201,6 @@ const styles = StyleSheet.create({
     top: {
         backgroundColor: 'white',
         padding: 10,
-        //margin: 5,
         borderRadius: 5,
     },
     text: {

@@ -12,26 +12,28 @@ const MyJourneys = () => {
 
 
     useEffect(() => {
-        getData('journeyList');
+        getData();
     }, []);
 
-    getData = async (key) => {
+
+    async function getData() {
         try {
-            await AsyncStorage.getItem(key).then(data => {
-                if (data) {
-                    setJourneyList(JSON.parse(data));
-                }
+            await AsyncStorage.getItem('journeyList').then(async data => {
+                console.log(data);
+                setJourneyList(JSON.parse(data));
             });
         } catch (e) {
             console.log(e);
         }
+
     }
 
-    function handlePress() {
+    function updateList() {
         getData('journeyList');
     }
     function deleteAll() {
         storeData('journeyList', []);
+        updateList();
     }
     const storeData = async (key, value) => {
         try {
@@ -47,13 +49,11 @@ const MyJourneys = () => {
         <SafeAreaView style={styles.container}>
             <ScrollView>
                 {journeyList.map(journey =>
-                    <Journey key={journey.name} name={journey.name} departures={journey.departures} />
+                    <Journey key={journey.stopList[0].id} stopList={journey.stopList} />
                 )}
             </ScrollView>
-
-            <Button title='oppdater liste' onPress={handlePress} />
+            <Button title='oppdater liste' onPress={getData} />
             <Button title='slett liste' onPress={deleteAll} />
-
         </SafeAreaView>
     );
 };
@@ -62,25 +62,6 @@ const styles = StyleSheet.create({
     container: {
         paddingTop: 20,
         flex: 1,
-        //backgroundColor: '#E3E6B3',
-    },
-    input: {
-        borderRadius: 5,
-        borderColor: 'grey',
-        margin: 15,
-        height: 40,
-        paddingLeft: 10,
-    },
-    button: {
-        borderRadius: 1,
-        borderColor: 'blue',
-    },
-    touchableOpacity: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'cornflowerblue',
-        margin: 10,
-        height: 40,
     },
 });
 

@@ -4,19 +4,30 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const EnabledDeparture = (props) => {
 
-    //const [showMoreInfo, setShowMoreInfo] = useState(false);
     const [moreInfo, setMoreInfo] = useState('');
+
 
     const Icon = () => {
         return <FontAwesome style={styles.icon} name={'bus'} color={'#a2ad00'} />;
     };
 
 
-    function handleClick() {
-        //setShowMoreInfo(!showMoreInfo);
+    function handleLongPress() {
         var text;
         if (moreInfo === '') {
-            text = props.frontText;
+            text = props.id.split('#')[1];
+        }
+        else {
+            text = '';
+        }
+        setMoreInfo(text);
+    }
+
+    function handlePress() {
+        //props.handleToggle(publicCode, frontText, false);
+        var text;
+        if (moreInfo === '') {
+            text = props.id.split('#')[1];
         }
         else {
             text = '';
@@ -27,10 +38,10 @@ const EnabledDeparture = (props) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <TouchableOpacity style={styles.touchableOpacity} onPress={handleClick} >
+            <TouchableOpacity style={styles.touchableOpacity} onPress={handlePress}>
                 <View style={styles.column}>
                     <Icon />
-                    <Text style={styles.text} >{props.publicCode}</Text>
+                    <Text style={styles.text} >{props.id.split('#')[0]}</Text>
                 </View >
 
                 <View style={styles.column}>

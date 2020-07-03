@@ -20,7 +20,6 @@ const Departure = (props) => {
                     <Text style={styles.text} >{props.publicCode}</Text>
                     <Text style={styles.text} >{props.frontText}</Text>
                 </View>
-
             </TouchableOpacity>
         </SafeAreaView>
     );
