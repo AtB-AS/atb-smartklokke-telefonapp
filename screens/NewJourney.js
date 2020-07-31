@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Text, SafeAreaView, StyleSheet, TextInput, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Text, SafeAreaView, StyleSheet, TextInput, ScrollView, TouchableOpacity, View, Button } from 'react-native';
 import createEnturService from '@entur/sdk';
 import BackgroundGeolocation from '@mauron85/react-native-background-geolocation';
 import StopPlace from '../components/StopPlace.js';
-import AsyncStorage from '@react-native-community/async-storage';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import EnabledStopPlace from '../components/EnabledStopPlace.js';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-const NewJourney = () => {
+
+const NewJourneyTest = ({ navigation }) => {
 
     const [userInput, setUserInput] = useState('');
-    //const [busListName, setBusListName] = useState('');
     const [stopPlaces, setStopPlaces] = useState([]);
     const [enabledStopPlaces, setEnabledStopPlaces] = useState([]);
     const [currentLocation, setCurrentLocation] = useState({ latitude: 0, longitude: 0 });
     const service = createEnturService({ clientName: 'AtB-smartklokke' });
+    const [disableNextButton, setDisableNextButton] = useState(true);
 
 
     useEffect(() => {
@@ -24,6 +24,7 @@ const NewJourney = () => {
                 longitude: location.longitude,
             })
         });
+        navigation.setOptions({ title: 'Ny reise' });
     }, []);
 
     useEffect(function getStop() {
@@ -59,7 +60,6 @@ const NewJourney = () => {
                 });
             }
             else {
-
                 newEnabledStopPlaces.forEach(stop => {
                     if (stop.id === stopPlaceId) {
                         stop.departures.push(publicCode + '#' + frontText);
@@ -76,79 +76,64 @@ const NewJourney = () => {
             newEnabledStopPlaces = newEnabledStopPlaces.filter(stop => { return stop.departures.length > 0 });
         }
         setEnabledStopPlaces(newEnabledStopPlaces);
+        if (newEnabledStopPlaces.length > 0) {
+            setDisableNextButton(false);
+        }
+        else {
+            setDisableNextButton(true);
+        }
     }
 
+    function handleNextButtonPress() {
+        navigation.navigate('NewJourneyDetails', { enabledStopPlaces: enabledStopPlaces });
+    }
 
-    async function handleSaveDeparturesPress() {
-        if (enabledStopPlaces.length === 0) {
-            return;
-        }
-        try {
-            await AsyncStorage.getItem('journeyList').then(data => {
-                console.log('data:', data);
-                if (data) {
-
-                    var journeyList = JSON.parse(data);
-                    const journey = {
-                        //name: busListName,
-                        stopList: enabledStopPlaces,
-                    }
-                    journeyList.push(journey);
-                    console.log('journeyList', journeyList);
-                    storeData('journeyList', journeyList);
-                }
-            });
-        } catch (e) {
-            console.log(e);
-        }
+    function handleSearchBarCrossPress() {
         setUserInput('');
         setStopPlaces([]);
-        setEnabledStopPlaces([]);
-
+        textInput.clear();
     }
-
-    const storeData = async (key, value) => {
-        try {
-            const jsonValue = JSON.stringify(value);
-            await AsyncStorage.setItem(key, jsonValue);
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
-
-
-
-
-
-
-
-
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.top}>
-                <View style={styles.stopInputContainer}>
-                    <FontAwesome style={styles.icon} name={'search'} color={'black'} />
-                    <TextInput
-                        style={styles.stopInput}
-                        onChangeText={setUserInput}
-                        placeholder='Finn Busstopp'
-                    />
-                </View>
-                <ScrollView horizontal={true} style={styles.enabledStopPlaces}>
-                    {enabledStopPlaces.map(stop =>
-                        <EnabledStopPlace key={stop.id} id={stop.id} name={stop.name} departures={stop.departures} handleToggle={handleToggleDeparture} />
-                    )}
-                </ScrollView>
-            </View>
             <ScrollView>
-                {stopPlaces.map(stop =>
-                    <StopPlace key={stop.properties.id} name={stop.properties.label} nsrId={stop.properties.id} toggleDeparture={handleToggleDeparture} />
-                )}
+                <View style={styles.stopPlaceSearchContainer}>
+                    <View style={styles.inputContainer}>
+                        <FontAwesome style={styles.icon} name={'search'} color={'gray'} />
+                        <TextInput
+                            style={styles.stopInput}
+                            onChangeText={setUserInput}
+                            placeholder='Søk opp stoppesteder'
+                            placeholderTextColor='gray'
+                            ref={input => { textInput = input }}
+                        />
+                        <TouchableOpacity style={styles.searchBarCross} onPress={handleSearchBarCrossPress}>
+                            <FontAwesome style={styles.icon} name={'times'} color={'gray'} />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                {enabledStopPlaces.length > 0 &&
+                    <View style={styles.enabledDeparturesContainer}>
+                        <Text style={styles.subTitle}>Lagrede linjer</Text>
+                        <ScrollView horizontal={true} style={styles.enabledStopPlaces}>
+                            {enabledStopPlaces.map(stop =>
+                                <EnabledStopPlace key={stop.id} id={stop.id} name={stop.name} departures={stop.departures} handleToggle={handleToggleDeparture} />
+                            )}
+                        </ScrollView>
+                    </View>
+                }
+                <View style={styles.stopPlacesContainer}>
+                    {stopPlaces.length > 0 &&
+                        <View>
+                            {stopPlaces.map(stop =>
+                                <StopPlace key={stop.properties.id} name={stop.properties.label} nsrId={stop.properties.id} toggleDeparture={handleToggleDeparture} />
+                            )}
+                        </View>
+                    }
+                </View>
             </ScrollView>
-            <TouchableOpacity style={styles.touchableOpacity} onPress={handleSaveDeparturesPress}>
-                <Text style={styles.buttonText}>Lagre Busser</Text>
+            <TouchableOpacity style={[styles.nextButton, disableNextButton ? styles.nextButtonDisabled : styles.nextButtonEnabled]} onPress={handleNextButtonPress} disabled={disableNextButton} >
+                <Text style={disableNextButton ? styles.buttonTextDisabled : styles.buttonTextEnabled}>Neste</Text>
             </TouchableOpacity>
         </SafeAreaView>
     );
@@ -156,57 +141,78 @@ const NewJourney = () => {
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: 20,
         flex: 1,
+        backgroundColor: '#1B1B1B',
+        justifyContent: 'space-between',
+    },
+    stopPlaceSearchContainer: {
+        marginLeft: 5,
+        marginRight: 5,
+        justifyContent: 'center',
+    },
+    enabledDeparturesContainer: {
+        marginLeft: 5,
+        marginRight: 5,
+        justifyContent: 'center',
+    },
+    stopPlacesContainer: {
+        marginLeft: 5,
+        marginRight: 5,
+    },
+    subTitle: {
+        fontSize: 15,
+        color: 'white',
     },
     stopInput: {
         marginLeft: 5,
         padding: 5,
+        width: '80%',
+        color: 'white',
+        backgroundColor: '#2A2A2A',
     },
-    stopInputContainer: {
+    inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         borderColor: 'grey',
         borderRadius: 5,
-        marginTop: 5,
+        marginTop: 10,
         marginBottom: 10,
         height: 40,
         paddingLeft: 10,
-        backgroundColor: 'whitesmoke'
-    },
-    listNameInput: {
-        borderRadius: 5,
-        borderColor: 'grey',
-        height: 40,
-        paddingLeft: 10,
+        backgroundColor: '#2A2A2A',
     },
     enabledStopPlaces: {
         flexDirection: 'row',
-        height: 70,
+        height: 60,
     },
-    button: {
-        borderRadius: 1,
-        borderColor: 'blue',
-    },
-    touchableOpacity: {
+    nextButton: {
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#a2ad00',
+        borderRadius: 5,
         margin: 10,
         height: 40,
     },
-    buttonText: {
+    nextButtonEnabled: {
+        backgroundColor: '#828A00',
+    },
+    nextButtonDisabled: {
+        backgroundColor: '#2A2A2A',
+    },
+    buttonTextDisabled: {
+        color: 'grey',
+    },
+    buttonTextEnabled: {
         color: 'white',
     },
-    top: {
-        backgroundColor: 'white',
-        padding: 10,
-        borderRadius: 5,
+    searchBarCross: {
+        flex: 1,
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    text: {
+    icon: {
         fontSize: 16,
-    },
-
+    }
 });
 
-export default NewJourney;
+export default NewJourneyTest;
