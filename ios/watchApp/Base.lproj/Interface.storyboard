@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="16097" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
+    <device id="watch38"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="16012"/>
+    </dependencies>
+    <scenes>
+        <!--Interface Controller-->
+        <scene sceneID="aou-V4-d1y">
+            <objects>
+                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="watchApp" customModuleProvider="target">
+                    <items>
+                        <label alignment="center" text="Avganger" id="3Ac-7G-XYr"/>
+                        <table alignment="left" id="GFj-UX-4yt">
+                            <items>
+                                <tableRow identifier="DeparturesTableRowController" id="MgJ-Go-kq2" customClass="DeparturesTableRowController" customModule="watchApp_Extension">
+                                    <group key="rootItem" width="1" height="45" alignment="left" layout="vertical" id="YBh-cd-bIz">
+                                        <items>
+                                            <label alignment="left" text="Label" id="bW4-iN-ivB" userLabel="StopPlaceLabel"/>
+                                            <group width="1" alignment="center" verticalAlignment="bottom" id="4GM-y6-Q96">
+                                                <items>
+                                                    <imageView width="19" height="20" alignment="left" verticalAlignment="center" image="busIcon" contentMode="scaleAspectFit" id="g2X-SG-TN6">
+                                                        <color key="tintColor" red="0.25098039215686274" green="0.26666666666666666" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </imageView>
+                                                    <label alignment="right" verticalAlignment="center" text="Label" id="vMJ-yI-p1Y" userLabel="Departure Arrival Time"/>
+                                                    <label alignment="left" verticalAlignment="center" text="Label" id="nw3-zg-QdE" userLabel="Departure Public Code"/>
+                                                </items>
+                                            </group>
+                                        </items>
+                                    </group>
+                                    <connections>
+                                        <outlet property="arrivalTime" destination="vMJ-yI-p1Y" id="wLg-LF-jt8"/>
+                                        <outlet property="publicCode" destination="nw3-zg-QdE" id="8Ff-f0-qME"/>
+                                        <outlet property="stopPlaceLabel" destination="bW4-iN-ivB" id="0HR-pI-ZDx"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
+                    </items>
+                    <connections>
+                        <outlet property="departureTable" destination="GFj-UX-4yt" id="oXV-NJ-Q1Q"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="220" y="345"/>
+        </scene>
+        <!--Static Notification Interface Controller-->
+        <scene sceneID="AEw-b0-oYE">
+            <objects>
+                <notificationController id="YCC-NB-fut">
+                    <items>
+                        <label alignment="left" text="Alert Label" numberOfLines="0" id="IdU-wH-bcW"/>
+                    </items>
+                    <notificationCategory key="notificationCategory" identifier="myCategory" id="JfB-70-Muf"/>
+                    <connections>
+                        <outlet property="notificationAlertLabel" destination="IdU-wH-bcW" id="JKC-fr-R95"/>
+                        <segue destination="eXb-UN-Cd0" kind="relationship" relationship="dynamicInteractiveNotificationInterface" id="mpB-YA-K8N"/>
+                    </connections>
+                </notificationController>
+            </objects>
+            <point key="canvasLocation" x="220" y="643"/>
+        </scene>
+        <!--Notification Controller-->
+        <scene sceneID="Niz-AI-uX2">
+            <objects>
+                <controller id="eXb-UN-Cd0" customClass="NotificationController" customModule="watchApp_Extension">
+                    <items>
+                        <button width="1" alignment="left" title="Button" id="SX8-6f-wvf">
+                            <connections>
+                                <action selector="cancelNotifications" destination="eXb-UN-Cd0" id="jMr-Ac-JUF"/>
+                            </connections>
+                        </button>
+                    </items>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="509" y="345"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="busIcon" width="23" height="11"/>
+    </resources>
+</document>
