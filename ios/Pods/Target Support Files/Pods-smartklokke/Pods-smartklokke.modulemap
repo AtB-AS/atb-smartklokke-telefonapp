@@ -1,0 +1,6 @@
+module Pods_smartklokke {
+  umbrella header "Pods-smartklokke-umbrella.h"
+
+  export *
+  module * { export * }
+}
