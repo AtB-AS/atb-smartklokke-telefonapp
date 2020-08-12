@@ -22,6 +22,7 @@
     "@react-navigation/stack": "^5.8.0",
     "react": "16.11.0",
     "react-native": "0.62.2",
+    "react-native-background-fetch": "^3.1.0",
     "react-native-gesture-handler": "^1.7.0",
     "react-native-ionicons": "^4.6.5",
     "react-native-modal-datetime-picker": "^8.7.1",

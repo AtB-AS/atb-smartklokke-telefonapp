@@ -19,6 +19,7 @@ const Journey = (props) => {
 
 
   useEffect(() => {
+    setIsEnabled(props.isEnabled);
     setTimeString(props.notificationStartTime + '-' + props.notificationEndTime);
     setTitleString(props.name);
     var enabledNotificationDays = [];
@@ -86,6 +87,7 @@ const Journey = (props) => {
   }
 
   function toggleSwitch() {
+    props.handleToggleSwitch(props.name, !isEnabled);
     setIsEnabled(!isEnabled);
   }
 

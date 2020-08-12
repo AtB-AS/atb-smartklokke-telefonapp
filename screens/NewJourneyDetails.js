@@ -62,29 +62,25 @@ const NewJourneyDetails = ({ route, navigation }) => {
 
     async function handleSaveDeparturesPress() {
         try {
+            var journeyId = journeyName + new Date();
+            var journeyList = []
+            const journey = {
+                id: journeyId,
+                name: journeyName,
+                stopList: route.params.enabledStopPlaces,
+                notificationDays: enabledDays,
+                notificationTimes: enabledNotificationTimes,
+                notificationStartTime: notificationStartTime,
+                notificationEndTime: notificationEndTime,
+                notify: true,
+            }
             await AsyncStorage.getItem('journeyList').then(data => {
                 if (data) {
-                    var journeyList = JSON.parse(data);
-                    var newJourneyName = journeyName;
-                    journeyList.forEach(j => {
-                        if (j.name == newJourneyName) {
-                            newJourneyName += '_';
-                        }
-                    });
-                    var journeyId = newJourneyName + new Date();
-                    const journey = {
-                        id: journeyId,
-                        name: newJourneyName,
-                        stopList: route.params.enabledStopPlaces,
-                        notificationDays: enabledDays,
-                        notificationTimes: enabledNotificationTimes,
-                        notificationStartTime: notificationStartTime,
-                        notificationEndTime: notificationEndTime,
-                    }
-                    journeyList.push(journey);
-                    storeData('journeyList', journeyList);
+                    journeyList = JSON.parse(data);
                 }
             });
+            journeyList.push(journey);
+            storeData('journeyList', journeyList);
         } catch (e) {
             console.log(e);
         }
