@@ -91,4 +91,6 @@ Derfor valgte vi å fokusere på varslinger om brukeres reiser når vi valgte fu
 ### Løsning
 Ut ifra konseptet ble det designet en løsning hvor brukere legger inn favorittreiser i en iPhone app hvor de kan se relevante sanntidsavganger og administrere ulike varsler.
 Løsningen inneholder også en Apple Watch app som viser informasjon om dine favorittreiser, samt enklel administrering av favorittreiser og varsler.
-Varslene sendes automatisk til smartklokka hvis du har lagt fra deg telefonen. 
+Varslene sendes automatisk til smartklokka hvis du har lagt fra deg telefonen.  
+  
+Innenfor tidsrammene vi hadde klarte vi ikke å implementere hele løsningen, spesielt mangler en god del implementasjon på Watch-appen. Det ble brukt for mye tid i starten av prosjektet på iPhone-appen, noe som resulterte i at nesten all funksjonalitet tilhørende iPhone-appen ble implementert, men på bekostning av at vi dermed fikk for lite tid til Watch-appen. I ettertid ser vi at løsningen vår hadde litt for stort scope for tidsrammene vi hadde, men i og med at oppgaven ikke bad om et ferdig finpusset produkt etter endt prosjekt, lot vi oss sikte høyt etter en løsning med mange utfordringer både design- og implementasjonsmessig. Dette gjorde at det har vært veldig interresant og lærerikt å jobbe på prosjektet.
