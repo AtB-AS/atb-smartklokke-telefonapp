@@ -34,7 +34,7 @@ med god brukervennlighet, og et konsept som kan ha stor nytte hos faste reisende
  
 
 ### Innsiktsarbeid
-Som del av innsiktsarbeidet ble det laget en brukerreise som beskriver ulike typer reisende og problemer/utfordringer de har.
+Som del av innsiktsarbeidet ble det laget brukerreiser som beskriver ulike typer reisende og problemer/utfordringer de har.
 Vår løsning ønsker å ta tak i noen av disse utfordringene.  
   
 I starten av prosjektet utførte vi intervjuer av folk på gata for å få større innsikt i deres reisemønstre og utfordringer tilknyttet bussreiser.
@@ -44,6 +44,8 @@ En strategi noen bruker for å motvirke dette er å sjekke sanntidene til bussen
   
 I og med at faste reisende er mer villige til å laste ned en Apple Watch-app fra AtB (i forhold til for eksempel turister eller andre som sjeldent resier med buss), 
 var dette en naturlig brukergruppe vi kunne fokusere på. 
+### Brukerreiser
+![Brukerreise](https://user-images.githubusercontent.com/37469920/90137280-ba9d3b00-dd75-11ea-8388-4167b969d2d9.png)
 
 
 
@@ -51,7 +53,7 @@ var dette en naturlig brukergruppe vi kunne fokusere på.
 
 ### Konsept
 
-"Gjøre det enklere for faste bussreisende å gjennomføre en rask og problemfri reise. Dette innebærer å ha oppdatert informasjon om reisen lett tilgjengelig på klokka."  
+<img width="674" alt="Screenshot 2020-08-13 at 10 35 44" src="https://user-images.githubusercontent.com/37469920/90137534-0cde5c00-dd76-11ea-9794-7500933c21b6.png"> 
 Brukeres oppfatning av konseptet ble testet ut gjennom gateintervjuer og vi fant at 60% var positive til konseptet. Personer som ble spurt var fra mange forskjellige grupper reisende;
 faste reisende daglige og ukentlige, de som bare reiser en gang iblandt og de som nesten aldri reiser med buss.
 
@@ -61,7 +63,7 @@ Innenfor tidsrammene prosjektet hadde, har vi måttet ta strenge prioriteringer 
 Prioriteringen har i hovedsak bakgrunn i en idémyldringsfase etterfulgt av en brukerundersøkelse, men det er også tatt hensyn til tidsrammene, 
 slik at funksjonalitet som kan implementeres raskere eller passer godt sammen prioriteres høyere.  
 
-I brukerundersøkelsen fikk respondanter prioritere de 3 viktigste funksjonalitetene for dem, resultatet fra undersøkelsen er gitt i tabellen under.  
+I brukerundersøkelsen fikk respondanter fordele ut 5 poeng til funksjonaliteter de ønsket, resultatet fra undersøkelsen er gitt i tabellen under.  
 | Funksjonalitets-Id | Beskrivelse | Prioriteringsprosent
 | :---: | ----------- | :---: |
 | 1 | Lagre reiseruter, med start, sluttdestinasjon og tidspunkt | 14%
@@ -82,8 +84,8 @@ I brukerundersøkelsen fikk respondanter prioritere de 3 viktigste funksjonalite
 | 16 | Se alternative reiseruter på klokka | 0%
 | 17 | Kjøpe billett/periodebillett på klokka | 60%
 | 18 | Utsette planlagte reiser med noen minutter, få et nytt reiseforslag. “Slumrefunksjon” | 20%  
-
-Fra resultatet fra undersøkelsen er det 6 funksjonaliteter som skiller seg ut og scoorer relativt høyt, av disse er halvparten ulike former for varslinger. 
+<img width="842" alt="Screenshot 2020-08-13 at 12 42 44" src="https://user-images.githubusercontent.com/37469920/90136767-f7b4fd80-dd74-11ea-9f5a-2a11494b207e.png">
+Fra resultatet av undersøkelsen er det 6 funksjonaliteter som skiller seg ut og scoorer relativt høyt, av disse er halvparten ulike former for varslinger. 
 Derfor valgte vi å fokusere på varslinger om brukeres reiser når vi valgte funksjonaliteter.  
 
 ### Løsning
