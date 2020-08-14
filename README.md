@@ -96,3 +96,20 @@ Varslene sendes automatisk til smartklokka hvis du har lagt fra deg telefonen.
 For å få et fullstendig innblikk i løsningen kan man ta en titt på prototypen i Figma under "Apple Watch" som ligger i AtB-teamet.  
   
 Innenfor tidsrammene vi hadde klarte vi ikke å implementere hele løsningen, spesielt mangler en god del implementasjon på Watch-appen. Det ble brukt for mye tid i starten av prosjektet på iPhone-appen, noe som resulterte i at nesten all funksjonalitet tilhørende iPhone-appen ble implementert, men på bekostning av at vi dermed fikk for lite tid til Watch-appen. I ettertid ser vi at løsningen vår hadde litt for stort scope for tidsrammene vi hadde, men i og med at oppgaven ikke bad om et ferdig finpusset produkt etter endt prosjekt, lot vi oss sikte høyt etter en løsning med mange utfordringer både design- og implementasjonsmessig. Dette gjorde at det har vært veldig interresant og lærerikt å jobbe på prosjektet, og både designer og utvikler er godt fornøyde med å ha hatt dette prosjektet som sommerjobb i år. 
+
+### Forklaring av design
+![MacBook Pro - 23](https://user-images.githubusercontent.com/37469920/90248306-c0a82000-de38-11ea-9d0a-e8c4f06d6194.png)
+![MacBook Pro - 17](https://user-images.githubusercontent.com/37469920/90248257-a2422480-de38-11ea-8bb8-5f1532826ec9.png)
+![MacBook Pro - 18](https://user-images.githubusercontent.com/37469920/90248314-c271e380-de38-11ea-8ac4-88cce361b713.png)
+![MacBook Pro - 19](https://user-images.githubusercontent.com/37469920/90248313-c271e380-de38-11ea-9f3e-dad403a111ca.png)
+![MacBook Pro - 20](https://user-images.githubusercontent.com/37469920/90248311-c1d94d00-de38-11ea-886d-1bf0d59ac66c.png)
+![MacBook Pro - 21](https://user-images.githubusercontent.com/37469920/90248308-c140b680-de38-11ea-861f-c72a119e9fc6.png)
+![MacBook Pro - 22](https://user-images.githubusercontent.com/37469920/90248307-c140b680-de38-11ea-9a4a-c1e4f21b282f.png)
+![MacBook Pro - 24](https://user-images.githubusercontent.com/37469920/90248302-bf76f300-de38-11ea-83b2-df87f62e0707.png)
+![MacBook Pro - 25](https://user-images.githubusercontent.com/37469920/90248301-be45c600-de38-11ea-94c5-4035db0d91a7.png)
+![MacBook Pro - 26](https://user-images.githubusercontent.com/37469920/90248293-bb4ad580-de38-11ea-98d8-506cc162a7ec.png)
+![MacBook Pro - 27](https://user-images.githubusercontent.com/37469920/90248918-d8cc6f00-de39-11ea-9437-ef83fc2b99c9.png)
+![MacBook Pro - 28](https://user-images.githubusercontent.com/37469920/90248915-d702ab80-de39-11ea-96ac-f6d68ab9a61b.png)
+![MacBook Pro - 29](https://user-images.githubusercontent.com/37469920/90248913-d538e800-de39-11ea-8638-f296d8500d94.png)
+![MacBook Pro - 30](https://user-images.githubusercontent.com/37469920/90248902-d0743400-de39-11ea-934d-37f0c7fbed0c.png)
+![MacBook Pro - 31](https://user-images.githubusercontent.com/37469920/90248896-ceaa7080-de39-11ea-90fa-b9e725988741.png)
